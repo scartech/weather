@@ -16,6 +16,7 @@ function AddDialog({ open, onCancel, onOK }) {
 
   const handleOK = () => {
     onOK(value);
+    setValue('');
   };
 
   const handleValueChange = (e) => {

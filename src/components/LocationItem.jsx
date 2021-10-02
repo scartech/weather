@@ -100,7 +100,7 @@ function LocationItem({ apiKey, location, handleDelete }) {
 
           setTemperature(`${celsiusToFahrenheit(data.temp)}\xB0F`);
           setFeelsLike(`${celsiusToFahrenheit(data.app_temp)}\xB0F`);
-          setHumidity(`${data.rh}%`);
+          setHumidity(`${Math.round(data.rh)}%`);
           setSunrise(adjustHours(data.sunrise));
           setSunset(adjustHours(data.sunset));
           setWindSpeed(`${metersPerSecToMPH(data.wind_spd)} MPH`);

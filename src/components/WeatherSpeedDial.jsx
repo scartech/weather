@@ -22,7 +22,7 @@ function WeatherSpeedDial({ handleClick }) {
     <div>
       <SpeedDial
         ariaLabel="Weather Menu"
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
+        sx={{ position: 'fixed', bottom: 20, right: 20 }}
         icon={<SpeedDialIcon icon={<SettingsIcon />} />}
       >
         {actions.map((action) => (
