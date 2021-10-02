@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
 import {
   Dialog,
   DialogActions,
@@ -17,10 +17,10 @@ function KeyDialog({ open, onCancel, onOK }) {
 
   useEffect(() => {
     const key = localStorage.getItem('apiKey');
-    setApiKey(key ? key : '');
+    setApiKey(key);
   }, []);
 
-  const handleOK = (e) => {
+  const handleOK = () => {
     onOK(apiKey);
   };
 
@@ -62,5 +62,11 @@ function KeyDialog({ open, onCancel, onOK }) {
     </Dialog>
   );
 }
+
+KeyDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onOK: PropTypes.func.isRequired,
+};
 
 export default KeyDialog;

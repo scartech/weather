@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import PropTypes from 'prop-types';
 import {
   Dialog,
   DialogActions,
@@ -49,5 +49,11 @@ function AddDialog({ open, onCancel, onOK }) {
     </Dialog>
   );
 }
+
+AddDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onOK: PropTypes.func.isRequired,
+};
 
 export default AddDialog;

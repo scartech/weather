@@ -2,6 +2,7 @@ import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
 import CloudIcon from '@mui/icons-material/Cloud';
+import PropTypes from 'prop-types';
 
 const actions = [
   {
@@ -36,5 +37,9 @@ function WeatherSpeedDial({ handleClick }) {
     </div>
   );
 }
+
+WeatherSpeedDial.propTypes = {
+  handleClick: PropTypes.func.isRequired,
+};
 
 export default WeatherSpeedDial;

@@ -15,6 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { formatDistanceToNow } from 'date-fns';
 import { toDate } from 'date-fns-tz';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import zip from 'zippo';
 
@@ -34,22 +35,16 @@ const WeatherItem = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const celsiusToFahrenheit = (celsius) => {
-  return Math.round((celsius * 9) / 5 + 32);
-};
-
-const metersPerSecToMPH = (ms) => {
-  return Math.round(ms * 2.24);
-};
-
-const padValue = (value) => {
-  return padLeft(value + 1);
-};
-
 const padLeft = (value) => {
   const text = value.toString();
   return text.length > 1 ? text : `0${text}`;
 };
+
+const celsiusToFahrenheit = (celsius) => Math.round((celsius * 9) / 5 + 32);
+
+const metersPerSecToMPH = (ms) => Math.round(ms * 2.24);
+
+const padValue = (value) => padLeft(value + 1);
 
 const toLocalDate = (value) => {
   const utcDate = toDate(`${value}+00:00`);
@@ -131,6 +126,7 @@ function LocationItem({ apiKey, location, handleDelete }) {
   };
 
   return (
+    /* eslint-disable react/jsx-one-expression-per-line */
     <>
       <Item elevation={6}>
         <Typography variant="h3">
@@ -250,7 +246,14 @@ function LocationItem({ apiKey, location, handleDelete }) {
         </Alert>
       </Snackbar>
     </>
+    /* eslint-enable react/jsx-one-expression-per-line */
   );
 }
+
+LocationItem.propTypes = {
+  apiKey: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+};
 
 export default LocationItem;
