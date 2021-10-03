@@ -1,18 +1,18 @@
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
-import CloudIcon from '@mui/icons-material/Cloud';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import PropTypes from 'prop-types';
 
 const actions = [
   {
     icon: <AddIcon />,
-    tooltip: 'Add New Location',
+    tooltip: 'Add Location',
     op: 'ADD',
   },
   {
-    icon: <CloudIcon />,
-    tooltip: 'Update Weatherbit Key',
+    icon: <VpnKeyIcon />,
+    tooltip: 'API Key',
     op: 'UPDATE_KEY',
   },
 ];
@@ -22,7 +22,7 @@ function WeatherSpeedDial({ handleClick }) {
     <div>
       <SpeedDial
         ariaLabel="Weather Menu"
-        sx={{ position: 'fixed', bottom: 20, right: 20 }}
+        sx={{ position: 'fixed', bottom: 15, right: 15 }}
         icon={<SpeedDialIcon icon={<SettingsIcon />} />}
       >
         {actions.map((action) => (

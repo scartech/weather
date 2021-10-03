@@ -8,7 +8,6 @@ import {
   DialogTitle,
   TextField,
   Button,
-  Typography,
   Link,
 } from '@mui/material';
 
@@ -33,16 +32,11 @@ function KeyDialog({ open, onCancel, onOK }) {
       <DialogTitle>Weatherbit API</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="caption">
-            Sign up for a free Weatherbit.io API account &nbsp;
-            <Link
-              href="https://www.weatherbit.io/account/create"
-              target="_blank"
-            >
-              here
-            </Link>
-            .
-          </Typography>
+          Sign up for a free Weatherbit.io API account &nbsp;
+          <Link href="https://www.weatherbit.io/account/create" target="_blank">
+            here
+          </Link>
+          .
         </DialogContentText>
         <TextField
           autoFocus

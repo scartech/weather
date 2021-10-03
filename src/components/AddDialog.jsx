@@ -8,7 +8,6 @@ import {
   DialogTitle,
   TextField,
   Button,
-  Typography,
 } from '@mui/material';
 
 function AddDialog({ open, onCancel, onOK }) {
@@ -28,9 +27,7 @@ function AddDialog({ open, onCancel, onOK }) {
       <DialogTitle>Add Location</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography variant="caption">
-            Enter the location as either a ZIP code or as City, State.
-          </Typography>
+          Enter the location as either a ZIP code or as City, State.
         </DialogContentText>
         <TextField
           autoFocus

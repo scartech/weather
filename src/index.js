@@ -19,7 +19,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Encode Sans',
-    fontSize: 10,
+    fontSize: 12,
     fontWeightLight: 400,
     fontWeightRegular: 500,
     fontWeightMedium: 600,
