@@ -13,11 +13,12 @@ import {
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, format, parse } from 'date-fns';
 import { toDate } from 'date-fns-tz';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import zip from 'zippo';
+import ForecastItem from './ForecastItem';
 
 const Item = styled(Paper)(({ theme }) => ({
   fontSize: '10px',
@@ -52,6 +53,11 @@ const toLocalDate = (value) => {
   return formatDistanceToNow(utcDate, { addSuffix: true });
 };
 
+const toDayOfWeek = (value) => {
+  const date = parse(value, 'yyyy-MM-dd', new Date());
+  return format(date, 'EEEE');
+};
+
 const adjustHours = (value) => {
   const now = new Date();
   const utcDate = toDate(
@@ -63,7 +69,8 @@ const adjustHours = (value) => {
   return `${padLeft(utcDate.getHours())}:${padLeft(utcDate.getMinutes())}`;
 };
 
-const apiBaseUrl = 'https://api.weatherbit.io/v2.0/current';
+const currentApiBaseUrl = 'https://api.weatherbit.io/v2.0/current';
+const forecastApiBaseUrl = 'https://api.weatherbit.io/v2.0/forecast/daily';
 const imageBaseUrl = 'https://www.weatherbit.io/static/img/icons/';
 
 function LocationItem({ apiKey, location, handleDelete }) {
@@ -80,11 +87,52 @@ function LocationItem({ apiKey, location, handleDelete }) {
   const [windSpeed, setWindSpeed] = useState('');
   const [observationTime, setObservationTime] = useState('');
   const [loading, setLoading] = useState(true);
+  const [forecast, setForecast] = useState([]);
 
   useEffect(() => {
+    const updateForecast = async () => {
+      try {
+        let url = `${forecastApiBaseUrl}?key=${apiKey}&units=I&days=4&`;
+
+        if (zip.validate(location)) {
+          url += `postal_code=${location}`;
+        } else {
+          const locationValue = encodeURIComponent(location);
+          url += `city=${locationValue}`;
+        }
+
+        const res = await axios.get(url);
+        const data = res?.data?.data;
+        if (data) {
+          const values = data.map((day) => {
+            const val = {
+              forecastDate: toDayOfWeek(day?.valid_date),
+              highTemp: `${Math.round(day?.high_temp)}\xB0`,
+              lowTemp: `${Math.round(day?.low_temp)}\xB0`,
+              imageUrl: `${imageBaseUrl}/${day?.weather?.icon}.png`,
+              description: day?.weather?.description,
+              rainChance: `${Math.round(day?.pop)}%`,
+            };
+
+            return val;
+          });
+
+          setForecast(values);
+        } else {
+          setSnackbarMessage(`Unable to get weather forecast for ${location}`);
+          setOpenSnackbar(true);
+        }
+      } catch {
+        setSnackbarMessage(`Unable to get weather forecast for ${location}`);
+        setOpenSnackbar(true);
+      }
+
+      setLoading(false);
+    };
+
     const updateWeather = async () => {
       try {
-        let url = `${apiBaseUrl}?key=${apiKey}&`;
+        let url = `${currentApiBaseUrl}?key=${apiKey}&`;
 
         if (zip.validate(location)) {
           url += `postal_code=${location}`;
@@ -99,8 +147,8 @@ function LocationItem({ apiKey, location, handleDelete }) {
           setImageUrl(`${imageBaseUrl}/${data?.weather?.icon}.png`);
           setDescription(data?.weather?.description);
 
-          setTemperature(`${celsiusToFahrenheit(data.temp)}\xB0F`);
-          setFeelsLike(`${celsiusToFahrenheit(data.app_temp)}\xB0F`);
+          setTemperature(`${celsiusToFahrenheit(data.temp)}\xB0`);
+          setFeelsLike(`${celsiusToFahrenheit(data.app_temp)}\xB0`);
           setHumidity(`${Math.round(data.rh)}%`);
           setSunrise(adjustHours(data.sunrise));
           setSunset(adjustHours(data.sunset));
@@ -116,7 +164,7 @@ function LocationItem({ apiKey, location, handleDelete }) {
         setOpenSnackbar(true);
       }
 
-      setLoading(false);
+      updateForecast();
     };
 
     updateWeather();
@@ -220,6 +268,11 @@ function LocationItem({ apiKey, location, handleDelete }) {
               <Grid item xs={4}>
                 <WeatherItem elevation={0}>Wind: {windSpeed}</WeatherItem>
               </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+              {forecast.map((f) => (
+                <ForecastItem key={f.forecastDate} {...f} />
+              ))}
             </Grid>
           </>
         )}
