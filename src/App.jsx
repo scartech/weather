@@ -87,7 +87,7 @@ function App() {
     <>
       <Container maxWidth="md">
         {locations.length > 0 && (
-          <Stack spacing={6}>
+          <Stack spacing={1}>
             {locations.map((location) => (
               <LocationItem
                 key={location}

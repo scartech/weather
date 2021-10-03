@@ -20,7 +20,7 @@ import axios from 'axios';
 import zip from 'zippo';
 
 const Item = styled(Paper)(({ theme }) => ({
-  fontSize: '14px',
+  fontSize: '10px',
   padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
@@ -29,8 +29,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const WeatherItem = styled(Paper)(({ theme }) => ({
-  fontSize: '15px',
-  padding: theme.spacing(1.5),
+  fontSize: '10px',
+  padding: theme.spacing(1),
+  marginTop: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
@@ -129,7 +130,7 @@ function LocationItem({ apiKey, location, handleDelete }) {
     /* eslint-disable react/jsx-one-expression-per-line */
     <>
       <Item elevation={6}>
-        <Typography variant="h3">
+        <Typography variant="h5">
           {location}
           <IconButton onClick={() => handleDelete(location)} size="small">
             <DeleteIcon fontSize="small" />
@@ -142,8 +143,8 @@ function LocationItem({ apiKey, location, handleDelete }) {
                 <Grid item md={12}>
                   <Skeleton
                     variant="circular"
-                    height={80}
-                    width={80}
+                    height={60}
+                    width={60}
                     sx={{ margin: 'auto' }}
                   />
                 </Grid>
@@ -183,8 +184,8 @@ function LocationItem({ apiKey, location, handleDelete }) {
                   alt={description}
                   src={imageUrl}
                   sx={{
-                    width: 80,
-                    height: 80,
+                    width: 60,
+                    height: 60,
                     margin: 'auto',
                   }}
                 />
@@ -192,7 +193,7 @@ function LocationItem({ apiKey, location, handleDelete }) {
             </Grid>
             <Grid container justifyContent="center">
               <Grid item xs={12}>
-                <Typography variant="h5">{description}</Typography>
+                <Typography variant="h6">{description}</Typography>
                 <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
                   {observationTime}
                 </Typography>
@@ -200,9 +201,7 @@ function LocationItem({ apiKey, location, handleDelete }) {
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <WeatherItem elevation={0}>
-                  Current temp: {temperature}
-                </WeatherItem>
+                <WeatherItem elevation={0}>Current: {temperature}</WeatherItem>
               </Grid>
               <Grid item xs={4}>
                 <WeatherItem elevation={0}>Feels like: {feelsLike}</WeatherItem>
