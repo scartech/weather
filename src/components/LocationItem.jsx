@@ -31,7 +31,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const WeatherItem = styled(Paper)(({ theme }) => ({
   fontSize: '10px',
-  padding: theme.spacing(1),
+  padding: theme.spacing(0.5),
   marginTop: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
@@ -247,7 +247,7 @@ function LocationItem({ apiKey, location, handleDelete }) {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               <Grid item xs={4}>
                 <WeatherItem elevation={0}>Current: {temperature}</WeatherItem>
               </Grid>
@@ -258,7 +258,7 @@ function LocationItem({ apiKey, location, handleDelete }) {
                 <WeatherItem elevation={0}>Humidity: {humidity}</WeatherItem>
               </Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               <Grid item xs={4}>
                 <WeatherItem elevation={0}>Sunrise: {sunrise}</WeatherItem>
               </Grid>
@@ -269,7 +269,7 @@ function LocationItem({ apiKey, location, handleDelete }) {
                 <WeatherItem elevation={0}>Wind: {windSpeed}</WeatherItem>
               </Grid>
             </Grid>
-            <Grid container spacing={2}>
+            <Grid container>
               {forecast.map((f) => (
                 <ForecastItem key={f.forecastDate} {...f} />
               ))}

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 const Item = styled(Paper)(({ theme }) => ({
   fontSize: '8px',
-  padding: theme.spacing(1),
-  marginTop: theme.spacing(1),
-  marginLeft: theme.spacing(1.5),
+  padding: theme.spacing(0.25),
+  marginTop: theme.spacing(2),
+  marginLeft: theme.spacing(0.5),
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
@@ -43,8 +43,11 @@ function ForecastItem({
           </Grid>
           <Grid container justifyContent="center">
             <Typography variant="caption">
-              H: {highTemp} L: {lowTemp} Rain: {rainChance}
+              H: {highTemp} L: {lowTemp}
             </Typography>
+          </Grid>
+          <Grid container justifyContent="center">
+            <Typography variant="caption">Rain: {rainChance}</Typography>
           </Grid>
         </Item>
       </Grid>
